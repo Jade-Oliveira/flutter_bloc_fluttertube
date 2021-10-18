@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fluttertube_bloc/models/video.dart';
 import 'package:http/http.dart' as http;
 
 const API_KEY = "AIzaSyDpOSiYf1pX-DCS8WLTtfXAvGZ9YZ9nqhc";
@@ -16,10 +17,20 @@ class Api {
     decode(response);
   }
 
-  decode(http.Response response) {
+  List<Video> decode(http.Response response) {
     if (response.statusCode == 200) {
       //retorna os dados do json
       var decoded = json.decode(response.body);
+
+      List<Video> videos = decoded['items'].map<Video>((map) {
+        //pega cada um dos mapas do items do json e tranforma em objeto video
+        return Video.fromJson(map);
+      }).toList();
+      //no final transforma em uma lista de videos
+
+      return videos;
+    } else {
+      throw Exception('Failed to load videos');
     }
   }
 }
