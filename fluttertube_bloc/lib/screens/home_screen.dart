@@ -24,8 +24,10 @@ class Home extends StatelessWidget {
             icon: const Icon(Icons.star),
           ),
           IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
+            onPressed: () async {
+              //aqui eu pego o que digito no search do DataSearch que vem pela função close do buildResults
+              String? result =
+                  await showSearch(context: context, delegate: DataSearch());
             },
             icon: const Icon(Icons.search),
           )
