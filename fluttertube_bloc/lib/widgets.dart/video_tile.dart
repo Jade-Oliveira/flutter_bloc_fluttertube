@@ -1,7 +1,10 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertube_bloc/blocs/favorite_bloc.dart';
 
 import 'package:fluttertube_bloc/models/video.dart';
 
+// ignore: must_be_immutable
 class VideoTile extends StatelessWidget {
   Video video;
 
@@ -12,6 +15,9 @@ class VideoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.getBloc<FavoriteBloc>();
+    Map<String, Video> map = {};
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
@@ -49,13 +55,28 @@ class VideoTile extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.star_border,
-                  color: Colors.white,
-                  size: 30,
-                ),
+              StreamBuilder<Map<String, Video>>(
+                stream: bloc.outFav,
+                //initialData vazio porque ele só vai ter dados depois do sink.add
+                initialData: map,
+                builder:
+                    //esse snapshot vai conter toda a lista de favoritos
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return IconButton(
+                      icon: Icon(snapshot.data.containsKey(video.id)
+                          ? Icons.star
+                          : Icons.star_border),
+                      color: Colors.white,
+                      iconSize: 30,
+                      onPressed: () {
+                        bloc.toggleFavorite(video);
+                      },
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
               )
             ],
           )

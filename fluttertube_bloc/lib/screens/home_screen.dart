@@ -1,7 +1,9 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertube_bloc/blocs/favorite_bloc.dart';
 import 'package:fluttertube_bloc/blocs/videos_bloc.dart';
 import 'package:fluttertube_bloc/delegates/data_search.dart';
+import 'package:fluttertube_bloc/models/video.dart';
 import 'package:fluttertube_bloc/widgets.dart/video_tile.dart';
 
 class Home extends StatelessWidget {
@@ -10,6 +12,9 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.getBloc<VideosBloc>();
+    final blocFav = BlocProvider.getBloc<FavoriteBloc>();
+    Map<String, Video> map = {};
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -20,9 +25,22 @@ class Home extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.black87,
         actions: [
-          const Align(
+          Align(
             alignment: Alignment.center,
-            child: Text('0'),
+            child: StreamBuilder(
+              // initialData: map,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    '$snapshot.data.length',
+                  );
+                } else {
+                  return Container();
+                }
+                //erro no widget de texto estourando um overflow quando rebuilda a tela
+              },
+              stream: blocFav.outFav,
+            ),
           ),
           IconButton(
             onPressed: () {},

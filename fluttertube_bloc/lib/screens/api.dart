@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fluttertube_bloc/models/video.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: constant_identifier_names
 const API_KEY = "AIzaSyDpOSiYf1pX-DCS8WLTtfXAvGZ9YZ9nqhc";
 
 //"https://www.googleapis.com/youtube/v3/search?part=snippet&q=$search&type=video&key=$API_KEY&maxResults=10"
