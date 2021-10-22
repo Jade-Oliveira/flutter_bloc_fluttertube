@@ -27,16 +27,13 @@ class Home extends StatelessWidget {
         actions: [
           Align(
             alignment: Alignment.center,
-            child: StreamBuilder(
-              // initialData: map,
+            child: StreamBuilder<Map<String, Video>>(
+              initialData: map,
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    '$snapshot.data.length',
-                  );
-                } else {
-                  return Container();
-                }
+                return Text(
+                  //se o snapshot tiver dados retorna o length, se não retorna um texto vazio
+                  '${snapshot.data?.length ?? ''}',
+                );
                 //erro no widget de texto estourando um overflow quando rebuilda a tela
               },
               stream: blocFav.outFav,
