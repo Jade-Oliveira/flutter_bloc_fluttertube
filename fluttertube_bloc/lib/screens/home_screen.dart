@@ -79,7 +79,7 @@ class Home extends StatelessWidget {
                 } else if (index > 1) {
                   //não quero pesquisar nada, quero só ir até a próxima página
                   bloc.inSearch.add(null);
-                  //quando chega no último item ele vai sinalizar o bloc e solciitar o carregamento de mais 10 itens mostrando a barra de progresso enquanto carrega
+                  //quando chega no último item ele vai sinalizar o bloc e solicitar o carregamento de mais 10 itens mostrando a barra de progresso enquanto carrega
                   return Container(
                     height: 40,
                     width: 40,

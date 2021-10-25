@@ -1,7 +1,9 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:fluttertube_bloc/blocs/favorite_bloc.dart';
 import 'package:fluttertube_bloc/models/video.dart';
+import 'package:fluttertube_bloc/screens/api.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
@@ -28,7 +30,10 @@ class FavoritesScreen extends StatelessWidget {
               //inkwell para poder tocar nos elementos da lista e ter um efeito visual
               return InkWell(
                 //colocar player do youtube aqui
-                onTap: () {},
+                onTap: () {
+                  FlutterYoutube.playYoutubeVideoById(
+                      apiKey: API_KEY, videoId: v.id);
+                },
                 onLongPress: () {
                   //excluo da lista de favoritos
                   bloc.toggleFavorite(v);
